@@ -1,0 +1,25 @@
+import 'package:paradicee/dice.dart';
+import 'package:paradicee/dice10.dart';
+import 'package:paradicee/dicepool.dart';
+
+class DicePool10 extends DicePool {
+  // Ajoute un dès à 6 faces dans la pool de dès ( toujours à la fin de celle-ci ).
+  void addDiceToPool() {
+    pool.add(Dice10());
+  }
+
+  int getNbFacesOfDicePool() {
+    return Dice10().getnbFace();
+  }
+
+  @override
+  int getNbrOfOccurrences(int i) {
+    List<int> platoccurences = List.generate(Dice10().getnbFace() + 1, (index) => 0);
+    for (Dice des in this.pool) {
+      platoccurences[des.getresulatFace()] = platoccurences[des.getresulatFace()] + 1;
+    }
+    int result = platoccurences[i];
+    print(platoccurences);
+    return result;
+  }
+}
