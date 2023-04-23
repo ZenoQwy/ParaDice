@@ -3,11 +3,13 @@
 ## Description du projet  
 Para'Dice est une application en flutter de simulation de lancé de dés.
 L'application propose un joli écran de chargement avec un petit logo fait de toutes pièces. En arrivant sur la page d'acceuil vous aurez le choix entre deux types de simulation. 
-###Premiere simulation 
+
+Premiere simulation 
 La première simulation permer de simuler un "bassin" ou "récipient" contenant un nombre x de dés de votre choix ayant tous le même nomnbre de faces (6,10,20 ou 100).
 un bouton en bas à gauche de l'écran vous permettra de lancer les dés et de voir les résutats apparaître affichant également la moyenne de touts ces résultats.
 
-###Deuxième simulation 
+
+Deuxième simulation 
 La seconde simulation est déjà un peu peu plus élaboré. Elle vous demande de remplir vous même votre "récipient" avec le nombre de dés que vous souhaitez en leur donnant également le nombre de faces que vous souhaitez pour chaque dés. 
 
 ## Comment l'installer
