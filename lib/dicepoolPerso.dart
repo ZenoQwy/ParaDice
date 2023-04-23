@@ -13,24 +13,10 @@ class DicePoolPerso extends DicePool {
     pool.add(customDice);
   }
 
+  // Cette fonction est inutile dans cette classe
   @override
   int getNbFacesOfDicePool() {
     // TODO: implement getNbFacesOfDicePool
-    if (pool.isEmpty == true) {
-      return 0;
-    } else {
-      return pool[0].getnbFace();
-    }
-  }
-
-  @override
-  int getNbrOfOccurrences(int i) {
-    List<int> platoccurences = List.generate(1000, (index) => 0);
-    for (Dice des in this.pool) {
-      platoccurences[des.getresulatFace()] = platoccurences[des.getresulatFace()] + 1;
-    }
-    int result = platoccurences[i];
-    print(platoccurences);
-    return result;
+    throw UnimplementedError();
   }
 }

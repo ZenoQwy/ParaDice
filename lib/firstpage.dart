@@ -19,14 +19,14 @@ class _FirstPageState extends State<FirstPage> {
         body: Column(
           children: <Widget>[
             Container(
-              color: Colors.green, // Couleur de fond de la barre
-              height: 150, // Hauteur de la barre
+              color: Colors.green,
+              height: 150,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Expanded(
                     child: Image.asset(
-                      'assets/images/paradice_logo.png',
+                      'assets/images/paradice_logo.png', // logo de l'appli
                     ),
                   )
                 ],

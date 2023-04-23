@@ -22,67 +22,90 @@ class ThirdPage extends StatefulWidget {
 
 class _ThirdPageState extends State<ThirdPage> {
   DicePool lesdes = DicePoolPerso();
-  TextEditingController _nbdes = TextEditingController();
-  TextEditingController _facedes = TextEditingController();
+  TextEditingController _nbdes = TextEditingController(); // récupérer la quatité du des souhaité dans le textfield
+  TextEditingController _facedes = TextEditingController(); // récupérer la face du des souhaité dans le textfield
 
+  // LA widget de résultat
   Widget listeResultats() {
-    Column colonne = Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [],
-    );
-    Row ligne = Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [],
-    );
-    if (lesdes.isEmpty() == false) {
-      for (int i = 1; i <= lesdes.getNbFacesOfDicePool(); i++) {
-        if (i % 10 == 0) {
-          ligne.children.add(Text(
-            "nb $i : " + lesdes.getNbrOfOccurrences(i).toString() + " ",
-            style: TextStyle(fontSize: 20),
-          ));
-          colonne.children.add(ligne);
-          ligne = Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [],
-          );
-        } /*else if (i % 2 != 0 && i == 10) {
-        ligne.children.add(Text("Nb $i : " + lesdes.getNbrOfOccurrences(i).toString()));
-        colonne.children.add(ligne);
-        ligne = Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [],
-        );
-      }*/
-        else {
-          ligne.children.add(Text(
-            "nb $i : " + lesdes.getNbrOfOccurrences(i).toString() + " ",
-            style: TextStyle(fontSize: 20),
-          ));
-        }
+    List<Column> colonnes = [
+      Column(
+        // colonne pour le nb de faces
+        children: [],
+      ),
+      Column(
+        // colonnes pour le nom de dés de cette face
+        children: [],
+      ),
+      Column(
+        // colonne pour les résultat des dés d'une même face qui ont été lancé
+        children: [],
+      ),
+      Column(
+        // colonne pour la moyenne des résultat des dés d'une même face qui ont été lancé
+        children: [],
+      ),
+    ];
+
+    // Entête de chaque colonnes
+    colonnes[0].children.add(Text("Nb faces"));
+    colonnes[1].children.add(Text("Nb dés"));
+    colonnes[2].children.add(Text("Résultat"));
+    colonnes[3].children.add(Text("Moyenne"));
+
+    // Parcours du tableau renvoyé par la fonction
+    // " getThisPoolWithoutDuplicatedDice " qui me donne donc une réplique
+    // de la pool de dés sans avoir deux fois le même dés dedans
+    for (int i = 0; i < lesdes.getThisPoolWithoutDuplicatedDice().length; i++) {
+      // En se basant sur le tableau sans duplicata de dès de la fonction dit
+      // ci dessus, on a juste besoin d'ajouter cela à notre première colonne
+      // grâce à l'index de se tableau ( si il y a plusieurs dés différents. )
+      colonnes[0].children.add(Text("${lesdes.getThisPoolWithoutDuplicatedDice()[i]}"));
+
+      // Ajout de la quantité de des de la même face à l'aide de la fonction
+      // " getNbrOfOccurencesOfFaceDice " prenant en paramètre l'indice
+      // du résultat de la fonction " getThisPoolWithoutDuplicatedDice " soit,
+      // chaque dès unique present dans la pool de dés
+      colonnes[1]
+          .children
+          .add(Text("${lesdes.getNbrOfOccurencesOfFaceDice(lesdes.getThisPoolWithoutDuplicatedDice()[i])}"));
+
+      // Ajout des résultats de chaque lancé des dés à x faces grâce à la fonction
+      // " getResultatFaceOfSpecificDice " prenant en paramètre du résultat
+      // de la fonction (List<int>) " getThisPoolWithoutDuplicatedDice "
+      colonnes[2]
+          .children
+          .add(Text("${lesdes.getResultatFaceOfSpecificDice(lesdes.getThisPoolWithoutDuplicatedDice()[i])}"));
+      double moyenne = 0;
+
+      // Affichage de la moyenne dans la 4eme colonne
+      // Pour chaque résultat de lancé de dés unique présent dans la pool de dés
+      for (int y = 0;
+          y < lesdes.getResultatFaceOfSpecificDice(lesdes.getThisPoolWithoutDuplicatedDice()[i]).length;
+          y++) {
+        // On additionne touts les résultats de lancé de dés uniques entre eux
+        moyenne += lesdes.getResultatFaceOfSpecificDice(lesdes.getThisPoolWithoutDuplicatedDice()[i])[y];
       }
-      colonne.children.add(const Padding(padding: EdgeInsets.all(5)));
-      colonne.children.add(Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            "Moyenne : " + lesdes.getAverageOfPool().toStringAsFixed(2),
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          )
-        ],
-      ));
-      return colonne;
+      // On divise le tout par le nombre de dés unique pour chacunes des faces
+      moyenne /= lesdes.getResultatFaceOfSpecificDice(lesdes.getThisPoolWithoutDuplicatedDice()[i]).length;
+      // Ajout de ce résultat dans la 4eme colonne ( arondi à 1 apres la virgule )
+      colonnes[3].children.add(Text("${moyenne.toStringAsFixed(1)}"));
     }
-    return colonne;
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: colonnes,
+    );
   }
 
+  // La fonction du FloatingButton qui permet de lancer les des de la DicePool
   void _lancerLesDes() {
     setState(() {
       lesdes.roolDiceOfPool();
-      print(lesdes.getNbrOfOccurrences(lesdes.getNbFacesOfDicePool()));
     });
   }
 
+  // Ajout de dés dans la DicePool à l'aide d'une saisie utilisateur prenant en
+  // compte le nombre de face du dés à ajouter et sa quantité.
   void _ajouterdes() {
     setState(() {
       for (int i = 0; i < int.parse(_nbdes.text); i++) {
@@ -92,9 +115,11 @@ class _ThirdPageState extends State<ThirdPage> {
     });
   }
 
+  // Vide totalement la dicepool
   void _viderlapool() {
-    lesdes.resetToZeroDiceInPool();
-    lesdes.afficher();
+    setState(() {
+      lesdes.resetToZeroDiceInPool(); // Fonction permettant cela
+    });
   }
 
   @override
@@ -114,7 +139,7 @@ class _ThirdPageState extends State<ThirdPage> {
                 children: [
                   Expanded(
                     child: Image.asset(
-                      'assets/images/paradice_logo.png',
+                      'assets/images/paradice_logo.png', // Le logo de l'appli
                     ),
                   )
                 ],
@@ -129,10 +154,11 @@ class _ThirdPageState extends State<ThirdPage> {
                   child: Container(
                     child: TextField(
                       controller: _facedes,
-                      maxLength: 3,
+                      maxLength: 3, // Limite à entrer un nombre à 3 chiffres max
                       inputFormatters: [
                         FilteringTextInputFormatter.digitsOnly, // Accepte seulement les nombres
-                        FilteringTextInputFormatter.deny("0"), // Refuse la valeur 0
+                        FilteringTextInputFormatter.allow(RegExp(
+                            r'^[1-9][0-9]*$')) // Permet d'interdire uniquement la valeur 0 seule mais pas les chiffres composés de 0 comme 10, 20 ,30 etc ..
                       ],
                       decoration: InputDecoration(
                         hintText: 'Nombre de faces du dés',
@@ -153,7 +179,8 @@ class _ThirdPageState extends State<ThirdPage> {
                     maxLength: 3,
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly, // Accepte seulement les nombres
-                      FilteringTextInputFormatter.deny("0"), // Refuse la valeur 0
+                      FilteringTextInputFormatter.allow(RegExp(
+                          r'^[1-9][0-9]*$')) // Permet d'interdire uniquement la valeur 0 seule mais pas les chiffres composés de 0 comme 10, 20 ,30 etc ..
                     ],
                     decoration: InputDecoration(
                       hintText: 'Quantité de ce dés',
@@ -190,7 +217,15 @@ class _ThirdPageState extends State<ThirdPage> {
                   ),
                 ),
               ],
-            )
+            ),
+            const Padding(
+              padding: EdgeInsets.all(10),
+              child: Text(
+                "Les résultats :",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Column(children: [listeResultats()]),
           ]),
       floatingActionButton: FloatingActionButton(
         onPressed: _lancerLesDes,
