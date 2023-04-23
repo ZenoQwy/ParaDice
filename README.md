@@ -1,4 +1,4 @@
-# paradicee
+# Para'Dice
 
 A new Flutter project.
 
