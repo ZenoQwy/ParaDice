@@ -20,7 +20,7 @@ Le projet est officiellement terminée mais officieusement inachevé. Je m'expli
 Les fonctionnalités principales sont présentes mais je pense de par ailleurs dans un premier temps que le code peut-être raccourcis et être bien plus optimisé.
 De plus, avec cette application, je rencontre un problème que je n'ai pas pu résoudre qui fait planter l'application. ( vous même vous pouvez le faire si vous cherchez un petit peu ).
 D'autant plus que je trouve l'affichage des résultat bien trop bancal et j'aimerai l'améliorer.
-Sans oublié qu'en soit, il est toujours possible de rajouter des donctionnalité à cette application ! 
+Sans oublié qu'en soit, il est toujours possible de rajouter des fonctionnalité à cette application ! 
 
 ## Vidéo du projet 
 [Lien de la vidéo de présentation du projet](https://www.youtube.com/watch?v=id0AE7UXj2I)
