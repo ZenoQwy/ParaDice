@@ -13,7 +13,7 @@ __**Deuxième simulation :**__
 La seconde simulation est déjà un peu peu plus élaboré. Elle vous demande de remplir vous même votre "récipient" avec le nombre de dés que vous souhaitez en leur donnant également le nombre de faces que vous souhaitez pour chaque dés. 
 
 ## Comment l'installer
-Télécharger le .zip, le décompresser où vous le souhaitez, ouvir le projet dans Visual Code Studios, Android Studios ou d'autres interpréteur de code et lancez le programme. Veillez bien à ce que vous aillez correctement installer et configuré le [dart-dsk](https://dart.dev/get-dart) et [Flutter](https://docs.flutter.dev/) !
+Téléchargez le .zip, décompressez-le où vous le souhaitez, ouvir le projet dans Visual Code Studios, Android Studios ou d'autres interpréteur de code et lancez le programme. Veillez bien à ce que vous aillez correctement installer et configuré le [dart-dsk](https://dart.dev/get-dart) et [Flutter](https://docs.flutter.dev/) !
 
 ## Statut du projet et remarques 
 Le projet est officiellement terminée mais officieusement inachevé. Je m'explique :
